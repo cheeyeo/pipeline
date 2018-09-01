@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Pipeline::VERSION
   spec.authors       = ["Chee Yeo"]
   spec.email         = ["ckyeo.1@gmail.com"]
-
+  spec.date          = '2018-09-01'
   spec.summary       = 'Ruby data pipeline'
   spec.description   = 'Process data using pipelines and operations'
   spec.homepage      = 'https://github.com/cheeyeo/pipeline'
