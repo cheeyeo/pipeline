@@ -27,23 +27,28 @@ Load the pipeline gem into your project:
 require 'pipeline'
 ```
 
-Start by creating an `Operation` object by inheriting from `Pipeline::Operation` class:
+Before we can create a pipeline, we need operation objects for processing the data.
+
+Start by creating a simple `Operation` object by inheriting from `Pipeline::Operation` class:
 
 ```ruby
-class HelloWorld < Operation
+class HelloWorld < Pipeline::Operation
   def call(env)
     # env is the data passed in from the pipeline
+    # do your data processing here ...
 
     "Hello, #{env}"
+
+    super
   end
 end
 ```
 
-The example `HelloWorld` operation appends 'Hello' to every string passed in.
+The example `HelloWorld` operation appends `'Hello'` to every string passed in.
 
-To use operations, we need to create a pipeline.
+Next, we need to create a `pipeline`. Within a pipeline, we can chain multiple operations to transform the data into the desired state.
 
-Suppose we create a `HelloWorld` pipeline, we can do it as follows:
+Suppose we create a `HelloWorld` pipeline to use the `HelloWorld` operation, we can do it as follows:
 
 ```ruby
   Pipeline::Builder.new do |b|
@@ -51,11 +56,71 @@ Suppose we create a `HelloWorld` pipeline, we can do it as follows:
   end.call('World')
 ```
 
+The above will return `'Hello World'`
 
+We can also add operation classes as procs. From the above example, we can wrap the string in another by using an additional proc:
 
+```ruby
+Pipeline::Builder.new do |b|
+  b.use HelloWorld
+  b.use ->(str) { "More processing: #{str}" }
+end.call('World')
+```
 
+The above will return `'More processing: Hello World'`
 
+We can also pass additional data into the operation classes:
 
+```ruby
+  Pipeline::Builder.new do |b|
+    b.use HelloWorld, 'Additional args'
+  end.call('World')
+```
+Within the operation class we can access it using the `data` attribute.
+
+```ruby
+class HelloWorld < Pipeline::Operation
+  def call(env)
+    # env is the data passed in from the pipeline
+    # data is passed in to the operation #=> 'Additional args'
+    # ....
+    super
+  end
+end
+```
+
+## Using custom operation classes
+
+Operation classes have a very simple interface.
+
+To create your own operation classes, you need to implement the following methods:
+
+```ruby
+  initialize(next_op, data=nil)
+
+  call(env)
+```
+
+`initialize` takes 2 arguments: the next operation to call; and any optional data the operation accepts
+
+`call` performs the processing on the passed in data from the builder e.g. `builder.call(mydata)`
+
+An example custom operation class:
+```ruby
+  class CustomOp
+    attr_reader :next_op, :data
+
+    def initialize(next_op, data=nil)
+      @next_op = next_op
+      @data = data
+    end
+
+    def call(env)
+      # Data processing here...
+      @next_op.call(env)
+    end
+  end
+```
 
 ## Development
 
