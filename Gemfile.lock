@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pipeline (0.1.0)
+    data-pipeline (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -40,7 +40,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
-  pipeline!
+  data-pipeline!
   rake (~> 10.0)
   rspec (~> 3.0)
   simplecov (~> 0.16.1)

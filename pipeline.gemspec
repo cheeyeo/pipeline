@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "pipeline/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "pipeline"
+  spec.name          = "data-pipeline"
   spec.version       = Pipeline::VERSION
   spec.authors       = ["Chee Yeo"]
   spec.email         = ["ckyeo.1@gmail.com"]
