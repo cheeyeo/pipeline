@@ -9,7 +9,7 @@ This is based on the [chain-of-responsibility pattern](https://en.wikipedia.org/
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pipeline'
+gem 'data-pipeline'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install pipeline
+    $ gem install data-pipeline
 
 ## Usage
 
