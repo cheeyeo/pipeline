@@ -4,6 +4,14 @@ Pipeline is a gem that enables you to build `operations` to transform data from 
 
 This is based on the [chain-of-responsibility pattern](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
 
+## Status
+
+[![Build Status](https://travis-ci.com/cheeyeo/pipeline.svg?branch=master)](https://travis-ci.com/cheeyeo/pipeline)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/e5d2a69f540157c59a67/maintainability)](https://codeclimate.com/github/cheeyeo/pipeline/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/e5d2a69f540157c59a67/test_coverage)](https://codeclimate.com/github/cheeyeo/pipeline/test_coverage)
+
 ## Installation
 
 Add this line to your application's Gemfile:
