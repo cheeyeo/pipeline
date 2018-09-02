@@ -29,7 +29,7 @@ RSpec.describe Pipeline::Builder do
   describe '#inspect_stack' do
     context 'reading the operation stack' do
       it 'should not allow modifying it' do
-        builder = Pipeline::Builder.new
+        builder = described_class.new
 
         expect do
           builder.inspect_stack << 1
@@ -43,7 +43,7 @@ RSpec.describe Pipeline::Builder do
       it 'should push it onto the stack' do
         example_op = ->(x) { x + 1 }
 
-        builder = Pipeline::Builder.new do
+        builder = described_class.new do
           use example_op, 9
         end
 
@@ -57,49 +57,66 @@ RSpec.describe Pipeline::Builder do
   end
 
   describe '#call' do
-    context 'without any operations' do
-      it 'should return a result' do
-        builder = Pipeline::Builder.new
+    let(:input) { 9 }
+    let(:example_operation_proc) { ->(x) { x + 1 } }
 
-        res = builder.call(9)
-        expect(res).to eq(9)
+    let!(:example_operation_class) do
+      class AddOne
+        def initialize(next_op)
+          @next_op = next_op
+        end
+
+        def call(env)
+          env += 1
+          @next_op.call(env)
+        end
+      end
+    end
+
+    context 'without any operations' do
+      it 'should return the original input' do
+        builder = described_class.new
+
+        res = builder.call(input)
+        expect(res).to eq(input)
       end
     end
 
     context 'with operation procs' do
-      it 'should return a result' do
-        builder = Pipeline::Builder.new do
-          use -> (x) { x + 1 }
+      let(:builder) do
+        operation = example_operation_proc
+
+        described_class.new do
+          use operation
         end
+      end
 
-        res = builder.call(9)
-
+      it 'should perform the operaton' do
+        res = builder.call(input)
         expect(res).to eq(10)
+      end
+
+      it 'should not mutate the origin input' do
+        builder.call(input)
+        expect(input).to eq(input)
       end
     end
 
     context 'with operation classes' do
-      before do
-        class AddOne
-          def initialize(next_op)
-            @next_op = next_op
-          end
-
-          def call(env)
-            env += 1
-            @next_op.call(env)
-          end
+      let(:builder) do
+        described_class.new do
+          use AddOne
         end
       end
 
-      it 'should return a result' do
-        builder = Pipeline::Builder.new do
-          use AddOne
-        end
+      it 'should perform the operation' do
+        result = builder.call(input)
+        expect(result).to eq(10)
+      end
 
-        res = builder.call(9)
-
-        expect(res).to eq(10)
+      it 'should not mutate the origin input' do
+        builder.call(input)
+        expect(input).to eq(input)
       end
     end
   end
