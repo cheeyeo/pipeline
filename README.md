@@ -6,11 +6,7 @@ This is based on the [chain-of-responsibility pattern](https://en.wikipedia.org/
 
 ## Status
 
-[![Build Status](https://travis-ci.com/cheeyeo/pipeline.svg?branch=master)](https://travis-ci.com/cheeyeo/pipeline)
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/e5d2a69f540157c59a67/maintainability)](https://codeclimate.com/github/cheeyeo/pipeline/maintainability)
-
-[![Test Coverage](https://api.codeclimate.com/v1/badges/e5d2a69f540157c59a67/test_coverage)](https://codeclimate.com/github/cheeyeo/pipeline/test_coverage)
+[![Build Status](https://travis-ci.com/cheeyeo/pipeline.svg?branch=master)](https://travis-ci.com/cheeyeo/pipeline) [![Maintainability](https://api.codeclimate.com/v1/badges/e5d2a69f540157c59a67/maintainability)](https://codeclimate.com/github/cheeyeo/pipeline/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/e5d2a69f540157c59a67/test_coverage)](https://codeclimate.com/github/cheeyeo/pipeline/test_coverage)
 
 ## Installation
 
